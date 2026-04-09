@@ -1,3 +1,35 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 1vw;
+}
 .slay {
+  padding: 3vw;
+}
+.table {
+  display: flex;
+  flex: auto;
+  flex-direction: row;
+  column-gap: 15px;
+  justify-content: center;
+}
+.book {
   padding: 5px;
+}
+img {
+  width: 10vw;
+  height: auto;
+}
+
+.fa-star {
+  color: rgb(207, 201, 48);
+}
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
