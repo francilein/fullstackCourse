@@ -1,0 +1,285 @@
+openapi: 3.0.0
+info:
+  title: Joke API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /random:
+    get:
+      summary: Get a random joke
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  jokeText:
+                    type: string
+                  jokeType:
+                    type: string
+
+  /jokes/{id}:
+    get:
+      summary: Get a specific joke
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 1
+                    jokeText:
+                      type: string
+                      example: "Why don't scientists trust atoms? Because they make up everything!"
+                    jokeType:
+                      type: string
+                      example: "Science"
+        "404":
+          description: Joke not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Joke not found"
+    put:
+      summary: Update a specific joke
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jokeText:
+                  type: string
+                  example: "Why don't scientists trust atoms? Because they make up everything!"
+                jokeType:
+                  type: string
+                  example: "Science"
+      responses:
+        "200":
+          description: Joke updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 1
+                  jokeText:
+                    type: string
+                    example: "Why don't scientists trust atoms? Because they make up everything!"
+                  jokeType:
+                    type: string
+                    example: "Science"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Invalid input
+        "404":
+          description: Joke not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Joke not found"
+    patch:
+      summary: Update a joke's type
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jokeText:
+                  type: string
+                jokeType:
+                  type: string
+      responses:
+        "200":
+          description: Joke updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 3
+                  jokeText:
+                    type: string
+                    example: "Why did the chicken cross the road? To get to the other side!"
+                  jokeType:
+                    type: string
+                    example: "Classic"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Invalid input
+        "404":
+          description: Joke not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Joke not found"
+    delete:
+      summary: Delete a specific joke
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        "204":
+          description: Joke deleted successfully
+        "404":
+          description: Joke not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Joke not found"
+  /filter:
+    get:
+      summary: Filter jokes by type
+      parameters:
+        - in: query
+          name: type
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 2
+                    jokeText:
+                      type: string
+                      example: "Why did the scarecrow win an award? Because he was outstanding in his field!"
+                    jokeType:
+                      type: string
+                      example: "Farm"
+        "404":
+          description: No jokes found for the specified type
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: No jokes found for the specified type
+
+  /jokes:
+    post:
+      summary: Add a new joke
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jokeText:
+                  type: string
+                  example: "Why did the chicken cross the road? To get to the other side!"
+                jokeType:
+                  type: string
+                  example: "Classic"
+      responses:
+        "201":
+          description: Joke created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 3
+                  jokeText:
+                    type: string
+                    example: "Why did the chicken cross the road? To get to the other side!"
+                  jokeType:
+                    type: string
+                    example: "Classic"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Invalid input
+    delete:
+      summary: Delete all jokes
+      responses:
+        "204":
+          description: All jokes deleted successfully
